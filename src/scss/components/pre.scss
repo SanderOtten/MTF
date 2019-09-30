@@ -1,0 +1,17 @@
+textarea.uploadBox, pre {
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc( 100vh - 410px ) ;
+  width: 90%;
+  background-color: $txt-clr;
+  color: $p-clr-1;
+  border: 1px solid darken($p-clr-1, 90%);
+}
+
+textarea::selection, pre::selection, input::selection {
+  background: lighten($base-color,50%);
+}

@@ -1,0 +1,109 @@
+<div>
+  <h2>{{'MTF.MAINTAIN' | translate }} {{'MTF.MENU.TRANSLATIONS' | translate }}</h2>
+
+  <button *ngIf="!showFilter" (click)="toggleFilter()">{{ 'MTF.BUTTON.SHOWFILTER' | translate }}</button>
+  <button *ngIf="showFilter" (click)="toggleFilter()">{{ 'MTF.BUTTON.HIDEFILTER' | translate }}</button>
+
+  <div *ngIf="showFilter" class="filter">
+    <h4>{{ 'MTF.FILTER.TITLE' | translate }}</h4>
+    <ul>
+      <li>
+        <label for="applications[]">{{ 'MTF.FILTER.ON.APPLICATION' | translate }}</label>
+        <br/>
+        <ul>
+          <li *ngFor="let app of pollingDbService.applications">
+            <input type="checkbox"
+              name="applications[]"
+              [value]="app.code"
+              (click)="toggleCheckBoxApp(app.code)"
+              [checked]="filterOn.app_code.indexOf(app.code) > -1"
+            >
+            <span (click)="toggleCheckBoxApp(app.code)">&nbsp;{{app.code}} - {{app.name}}</span>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <label for="languages[]">{{ 'MTF.FILTER.ON.LANGUAGE' | translate }}</label>
+        <br/>
+        <ul>
+          <li *ngFor="let lan of pollingDbService.languages">
+            <input type="checkbox"
+              name="languages[]"
+              [value]="lan.iso_639_1"
+              (click)="toggleCheckBoxLan(lan.iso_639_1)"
+              [checked]="filterOn.iso_639_1.indexOf(lan.iso_639_1) > -1"
+            >
+            <span (click)="toggleCheckBoxLan(lan.iso_639_1)">&nbsp;{{lan.iso_639_1}} - {{lan.english_name}}</span>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <label for="filterOnLabel">{{ 'MTF.FILTER.ON.LABEL' | translate }}</label>
+        <br/>
+        <input
+           id="filterOnLabel"
+           [(ngModel)]="filterOn.label"
+           (ngModelChange)="filterOn.label = $event.toUpperCase()"
+        >
+      </li>
+      <li>
+        <label for="filterOnTranslation">{{ 'MTF.FILTER.ON.TRANSLATION' | translate }}</label>
+        <br/>
+        <input id="filterOnTranslation" [(ngModel)]="filterOn.text">
+      </li>
+    </ul>
+    <div>
+      <button (click)="toggleFilter()">{{ 'MTF.BUTTON.HIDEFILTER' | translate }}</button>
+      <button (click)="clearFilter()">{{ 'MTF.BUTTON.CLEARFILTER' | translate }}</button>
+    </div>
+  </div>
+
+  <table appDataTable #mf="mfDataTable" [mfData]="pollingDbService.translations" >
+    <thead>
+      <tr>
+        <th id="labelhead" title="{{'MTF.TH.LABEL'       | translate }}"><app-default-sorter id="labelhead"       by="label"       >{{'MTF.TH.LABEL'       | translate }}</app-default-sorter></th>
+        <th id="apphead"   title="{{'MTF.TH.APPLICATION' | translate }}"><app-default-sorter id="applicationhead" by="app_name"    >{{'MTF.TH.APPLICATION' | translate }}</app-default-sorter></th>
+        <th id="langhead"  title="{{'MTF.TH.LANGUAGE'    | translate }}"><app-default-sorter id="languagehead"    by="iso_639_1"   >{{'MTF.TH.LANGUAGE'    | translate }}</app-default-sorter></th>
+        <th id="transhead" title="{{'MTF.TH.TRANSLATION' | translate }}"><app-default-sorter id="translationhead" by="translation" >{{'MTF.TH.TRANSLATION' | translate }}</app-default-sorter></th>
+        <th id="actions"   title="{{'MTF.TH.EDIT'        | translate }}"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of mf.data | filters:filterOn">
+        <td headers="labelhead">
+          <span>{{ data.label }}</span>
+        </td>
+        <td headers="apphead">
+          <span>{{ data.app_code }}</span>
+        </td>
+        <td headers="langhead">
+          <span>{{ data.iso_639_1 }}</span>
+        </td>
+        <td headers="transhead">
+          <span
+            *ngIf="data !== this.translation && data.id !== null"
+            (click)="edit(data)"
+          >{{ data.text }}</span>
+          <textarea
+            *ngIf="(data === this.translation || data.id === null)"
+            [(ngModel)]="data.text"
+            (mouseenter)="stopPolling()"
+            (keypress)="stopPolling()"
+            (keyup.enter)="save(data)"
+            (blur)="save(data)"
+            wrap="soft"
+            cols="30"
+            rows="Math.ceil(data.text.length/30)"
+          >{{ data.text }}</textarea>
+        </td>
+        <td headers="actions">
+          <span *ngIf="data !== this.translation && data.id !== null"><button (click)="edit(data)">{{'MTF.BUTTON.EDIT'   | translate }}</button></span>
+          <span *ngIf="data === this.translation"                    ><button (click)="save(data)">{{'MTF.BUTTON.SAVE'   | translate }}</button></span>
+          <span *ngIf="data === this.translation"                    ><button (click)="cancel()"  >{{'MTF.BUTTON.CANCEL' | translate }}</button></span>
+          <span *ngIf="data.id === null"                             ><button (click)="save(data)">{{'MTF.BUTTON.SAVE'   | translate }}</button></span>
+          <span *ngIf="data.id === null && data.text !== ''"         ><button (click)="cancel()"  >{{'MTF.BUTTON.CANCEL' | translate }}</button></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

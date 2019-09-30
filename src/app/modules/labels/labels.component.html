@@ -1,0 +1,103 @@
+<div>
+  <h2>{{'MTF.MAINTAIN' | translate }} {{'MTF.MENU.LABELS' | translate }}</h2>
+
+  <ul class="filter">
+    <li>
+      <label for="filterOn">{{'MTF.FILTER.TITLE' | translate }}:</label>
+      <select id="filterOn" [(ngModel)]="filterOn" (change)="(filterValue = '')">
+        <option value="*">{{ 'MTF.FILTER.SHOW_ALL' | translate }}</option>
+        <option value="label">{{ 'MTF.FILTER.ON.LABEL' | translate }}</option>
+        <option value="description">{{ 'MTF.FILTER.ON.DESCRIPTION' | translate }}</option>
+        <option value="app_code">{{ 'MTF.FILTER.ON.APPLICATION' | translate }}</option>
+      </select>
+    </li>
+    <li>
+      <input id="filterValue" [(ngModel)]="filterValue">
+    </li>
+  </ul>
+
+  <table id="filterTable" appDataTable #mf="mfDataTable" [mfData]="pollingDbService.labels" >
+    <thead>
+      <tr>
+        <th id="labelhead" title="{{'MTF.TH.LABEL'       | translate }}"><app-default-sorter id="labelhead" by="label"       >{{'MTF.TH.LABEL'       | translate }}</app-default-sorter></th>
+        <th id="descrhead" title="{{'MTF.TH.DESCRIPTION' | translate }}"><app-default-sorter id="descrhead" by="description" >{{'MTF.TH.DESCRIPTION' | translate }}</app-default-sorter></th>
+        <th id="apphead"   title="{{'MTF.TH.APPLICATION' | translate }}"><app-default-sorter id="apphead"   by="app_code"    >{{'MTF.TH.APPLICATION' | translate }}</app-default-sorter></th>
+        <th id="actions"   title="{{'MTF.TH.EDIT'        | translate }}"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of mf.data | filter:filterValue:filterOn">
+        <td headers="labelhead">
+          <span *ngIf="data !== this.label">{{ data.label  }}</span>
+          <input
+            *ngIf="data === this.label"
+            [(ngModel)]="data.label"
+            (ngModelChange)="data.label = $event.toUpperCase()"
+            (keyup.enter)="save(data)"
+            size="20"
+            maxlength="255"
+          >
+        </td>
+        <td headers="descrhead">
+          <span *ngIf="data !== this.label">{{ data.description  }}</span>
+          <input
+            *ngIf="data === this.label"
+            [(ngModel)]="data.description"
+            (keyup.enter)="save(data)"
+            size="40"
+            maxlength="255"
+          >
+        </td>
+        <td headers="apphead">
+          <span *ngIf="data !== this.label">{{ data.app_code  }}</span>
+          <select *ngIf="data === this.label" [(ngModel)]="data.app_id" >
+            <option *ngFor="let app of pollingDbService.applications" [value]="app.id">
+              {{ app.code }}
+            </option>
+          </select>
+        </td>
+        <td headers="actions">
+          <span *ngIf="data !== this.label"><button (click)="edit(data)"  >{{'MTF.BUTTON.EDIT'   | translate }}</button></span>
+          <span *ngIf="data !== this.label"><button (click)="delete(data)">{{'MTF.BUTTON.DELETE' | translate }}</button></span>
+          <span *ngIf="data === this.label"><button (click)="save(data)"  >{{'MTF.BUTTON.SAVE'   | translate }}</button></span>
+          <span *ngIf="data === this.label"><button (click)="cancel()"    >{{'MTF.BUTTON.CANCEL' | translate }}</button></span>
+        </td>
+      </tr>
+      <tr *ngIf="!addNewLabel">
+        <td colspan="4">
+          <button (click)="addNew()">{{'MTF.BUTTON.ADD' | translate }}</button>
+        </td>
+      </tr>
+      <tr *ngIf="addNewLabel">
+        <td headers="labelhead">
+          <input
+            [(ngModel)]="label.label"
+            (ngModelChange)="label.label = $event.toUpperCase()"
+            (keyup.enter)="save(label)"
+            size="20"
+            maxlength="255"
+          >
+        </td>
+        <td headers="descrhead">
+          <input
+            [(ngModel)]="label.description"
+            (keyup.enter)="save(label)"
+            size="20"
+            maxlength="255"
+          >
+        </td>
+        <td headers="apphead">
+          <select [(ngModel)]="label.app_id" >
+            <option *ngFor="let app of pollingDbService.applications" [value]="app.id">
+              {{ app.code }}
+            </option>
+          </select>
+        </td>
+        <td headers="actions">
+          <span><button (click)="save(label)">{{'MTF.BUTTON.SAVE'   | translate }}</button></span>
+          <span><button (click)="cancel()"   >{{'MTF.BUTTON.CANCEL' | translate }}</button></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

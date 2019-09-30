@@ -1,0 +1,32 @@
+// sizes
+$app-size-width: 100vw;
+$app-size-height: 100vh;
+
+$navigation-size-height: 45px;
+$navigation_item-size_width: 45px;
+$navigation_item_padding: 12px;
+
+$radius-items: 5px;
+
+$base-color: #0A1B2A;
+
+$p-clr-1: $base-color;
+$txt-clr: lighten($base-color, 90%);
+
+$p-clr-2: #2a5670; // 'ligthblue'    (100)
+$p-clr-3: #133143; // 'Dark blue'    (700)
+$p-clr-4: #1c4c68; // 'Darkish blue' (700)
+
+$s-clr-1: #264B7F; // 'dark blue'    (200)
+$s-clr-2: #4C617F; // 'greyish       (100)
+$s-clr-3: #5F4B7F; // 'purpleish'    (400)
+
+
+$clr-online:  #5cb85c;
+$clr-offline: #ff4757;
+$clr-save:    #5cb85c;
+$clr-cancel:  #d9534f;
+
+// animations
+$navigation-duration: .5s;
+$animation-duration: 2s;

@@ -1,0 +1,83 @@
+button {
+  display: inline-block;
+  margin: 5px;
+  padding: 5px 10px;
+  border: 0;
+  line-height: 1.5;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-size: 12px;
+  color: darken($txt-clr, 20%);
+  background-color: lighten($p-clr-1, 10%);
+  cursor: pointer;
+  -webkit-user-select: none;
+  transition: all $navigation-duration ease-in-out;
+  min-width: 75px;
+
+  use.icon {
+    fill: $txt-clr;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:hover {
+    @include box-shadow(0, 0, 15px, 1px, rgba($p-clr-3, 0.25), false);
+    color: darken($txt-clr, 10%);
+    background-color: lighten($p-clr-1, 15%);
+    z-index: 100;
+
+    use.icon {
+      fill: $txt-clr;
+    }
+  }
+
+  &:active {
+    color: darken($txt-clr, 10%);
+    background-color: lighten($p-clr-1, 15%);
+    @include box-shadow(0, 0, 15px, 1px, rgba($p-clr-1, 0.25), true);
+  }
+
+  &.cancel {
+    background-color: $clr-cancel;
+
+    use.icon {
+      fill: $txt-clr;
+    }
+
+    &:hover {
+      background-color: lighten($clr-cancel, 10%);
+
+      use.icon {
+        fill: $txt-clr;
+      }
+    }
+  }
+
+  &.disabled {
+    background-color: darkgrey;
+
+    &:hover {
+      background-color: darken(darkgrey, 10%);
+    }
+  }
+
+  &.save,
+  &.accept {
+    background-color: $clr-save;
+
+    use.icon {
+      fill: $txt-clr;
+    }
+
+    &:hover {
+      background-color: lighten($clr-save, 10%);
+
+      use.icon {
+        fill: $txt-clr;
+      }
+    }
+  }
+}

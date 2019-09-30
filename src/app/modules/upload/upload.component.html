@@ -1,0 +1,33 @@
+<div>
+  <h2>{{'MTF.MENU.UPLOADS' | translate }}</h2>
+  <div class="choose">
+    <ul>
+      <li>
+        <label for="application">{{'MTF.FILTER.ON.APPLICATION' | translate }}:&nbsp;</label>
+        <select id="application" [(ngModel)]="application">
+          <option [value]="0" selected></option>
+          <option *ngFor="let app of pollingDbService.applications" [value]="app.id" >{{app.name}}</option>
+        </select>
+      </li>
+      <li>
+        <label for="language">{{'MTF.FILTER.ON.LANGUAGE' | translate }}:&nbsp;</label>
+        <select id="language" [(ngModel)]="language">
+          <option [value]="0" disabled></option>
+          <option *ngFor="let lan of pollingDbService.languages" [value]="lan.id" >{{lan.native_name}}</option>
+        </select>
+      </li>
+    </ul>
+  </div>
+  <br>
+  <hr/>
+  <div *ngIf="saved">
+    <p>{{ 'MTF.SAVED' | translate }}</p>
+    <button (click)="saved=false">OK</button>
+  </div>
+  <p *ngIf="!saved">
+    <textarea class="uploadBox" [(ngModel)]="input" placeholder="{{ 'MTF.CONTENT_HERE' | translate }}"></textarea>
+  </p>
+  <p>
+    <button (click)="save()" *ngIf="input !==''" [disabled]="language === '' || application === '0' || input === ''">{{'MTF.BUTTON.SAVE' | translate }}</button>
+  </p>
+</div>

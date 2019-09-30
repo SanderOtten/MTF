@@ -1,0 +1,13 @@
+<ul>
+  <li class="currentLanguage" title="currentLanguage">
+    <span class="{{getFlag(currentLanguage.lang)}}"></span>
+  </li>
+  <li class="changelanguage" title="changelanguage">
+    <select id="language" [(ngModel)]="currentLanguage.lang" (change)="switchLanguage(currentLanguage.lang)">
+      <option value="0" disabled>{{ 'MTF.CHOOSE.LANGUAGE' | translate }}</option>
+      <option *ngFor="let lan of pollingDbService.languages" [value]="lan.iso_639_1.toLowerCase()">
+        {{ lan.native_name }}
+      </option>
+    </select>
+  </li>
+</ul>

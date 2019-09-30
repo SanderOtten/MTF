@@ -1,0 +1,45 @@
+*::selection {
+  background: $txt-clr;
+  color: $p-clr-1;
+}
+
+html {
+  font-size: 12pt;
+}
+
+body {
+  padding: 0;
+  background-color: $p-clr-1;
+  background: $p-clr-1;
+  color: $txt-clr;
+  font-size: 1em;
+  font-weight: 300;
+  width: $app-size-width;
+  height: $app-size-height;
+  overflow: hidden;
+}
+
+p {
+  margin: 0;
+  line-height: 1.2em;
+}
+
+h1, h2, h3 {
+  color: $txt-clr;
+  margin: 0;
+  padding: $navigation_item_padding;
+}
+
+h2 {
+  padding-left: 0;
+}
+
+.app-outlet {
+  padding: $navigation_item_padding;
+  height: calc(100vh - 150px) ;
+}
+
+
+.nav {
+  box-shadow: unset;
+}

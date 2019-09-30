@@ -1,0 +1,27 @@
+<div>
+  <h2>{{'MTF.MENU.DOWNLOADS' | translate }}</h2>
+  <br/>
+  <div class="choose">
+    <ul>
+      <li>
+        <label for="application">{{'MTF.FILTER.ON.APPLICATION' | translate }}:&nbsp;</label>
+        <select id="application" [(ngModel)]="application" (change)="getTranslations(language, application)">
+          <option [value]="0" selected></option>
+          <option *ngFor="let app of pollingDbService.applications" [value]="app.id" >{{app.name}}</option>
+        </select>
+      </li>
+      <li>
+        <label for="language">{{'MTF.FILTER.ON.LANGUAGE' | translate }}:&nbsp;</label>
+        <select id="language" [(ngModel)]="language" (change)="getTranslations(language, application)">
+          <option [value]="0" disabled></option>
+          <option *ngFor="let lan of pollingDbService.languages" [value]="lan.iso_639_1" >{{lan.native_name}}</option>
+        </select>
+      </li>
+    </ul>
+  </div>
+  <br/>
+  <hr/>
+  <pre *ngIf="output !== ''" id="result" focus="focus">{{output}}</pre>
+  <button *ngIf="output !== ''" (click)="copyToClipboard()">{{ 'MTF.BUTTON.COPY' | translate }}</button>
+  <button *ngIf="output !== ''" (click)="download()">{{ 'MTF.BUTTON.DOWNLOAD' | translate }}</button>
+</div>

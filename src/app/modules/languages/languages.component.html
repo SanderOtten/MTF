@@ -1,0 +1,132 @@
+<div>
+  <h2>{{'MTF.MAINTAIN' | translate }} {{'MTF.MENU.LANGUAGES' | translate }}</h2>
+  <table appDataTable #mf="mfDataTable" [mfData]="pollingDbService.languages" >
+    <thead>
+      <tr>
+        <th id="english_namehead" title="{{'MTF.TH.ENGLISH_NAME' | translate }}"><app-default-sorter id="english_namehead" by="english_name" >{{'MTF.TH.ENGLISH_NAME' | translate }}</app-default-sorter></th>
+        <th id="native_namehead"  title="{{'MTF.TH.NATIVE_NAME'  | translate }}"><app-default-sorter id="native_namehead"  by="native_name"  >{{'MTF.TH.NATIVE_NAME'  | translate }}</app-default-sorter></th>
+        <th id="iso_639_1head"    title="ISO_639_1"                             ><app-default-sorter id="iso_639_1head"    by="iso_639_1"    >ISO_639_1</app-default-sorter></th>
+        <th id="iso_639_2head"    title="ISO_639_2"                             ><app-default-sorter id="iso_639_2head"    by="iso_639_2"    >ISO_639_2</app-default-sorter></th>
+        <th id="iso_639_3head"    title="ISO_639_3"                             ><app-default-sorter id="iso_639_3head"    by="iso_639_3"    >ISO_639_3</app-default-sorter></th>
+        <th id="actions"          title="{{'MTF.TH.EDIT'         | translate }}"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of mf.data">
+        <td headers="english_namehead">
+          <span *ngIf="data !== this.language">{{ data.english_name }}</span>
+          <input
+             *ngIf="data === this.language"
+             [(ngModel)]="data.english_name"
+             type="text"
+             size="20"
+             maxlength="50"
+          >
+        </td>
+        <td headers="native_namehead">
+          <span *ngIf="data !== this.language">{{ data.native_name }}</span>
+          <input
+            *ngIf="data === this.language"
+            [(ngModel)]="data.native_name"
+            type="text"
+            size="20"
+            maxlength="50"
+          >
+        </td>
+        <td headers="iso_639_1">
+          <span *ngIf="data !== this.language">{{ data.iso_639_1 }}</span>
+          <input
+            *ngIf="data === this.language"
+            [(ngModel)]="data.iso_639_1"
+            (ngModelChange)="data.iso_639_1 = $event.toUpperCase()"
+            type="text"
+            size="2"
+            maxlength="2"
+          >
+        </td>
+        <td headers="iso_639_2">
+          <span *ngIf="data !== this.language">{{ data.iso_639_2 }}</span>
+          <input
+            *ngIf="data === this.language"
+            [(ngModel)]="data.iso_639_2"
+            (ngModelChange)="data.iso_639_2 = $event.toUpperCase()"
+            type="text"
+            size="3"
+            maxlength="3"
+          >
+        </td>
+        <td headers="iso_639_3">
+          <span *ngIf="data !== this.language">{{ data.iso_639_3 }}</span>
+          <input
+            *ngIf="data === this.language"
+            [(ngModel)]="data.iso_639_3"
+            (ngModelChange)="data.iso_639_3 = $event.toUpperCase()"
+            type="text"
+            size="3"
+            maxlength="3"
+          >
+        </td>
+        <td headers="actions">
+          <span *ngIf="data !== this.language"><button (click)="edit(data)"  >{{'MTF.BUTTON.EDIT'   | translate }}</button></span>
+          <span *ngIf="data !== this.language"><button (click)="delete(data)">{{'MTF.BUTTON.DELETE' | translate }}</button></span>
+          <span *ngIf="data === this.language"><button (click)="save(data)"  >{{'MTF.BUTTON.SAVE'   | translate }}</button></span>
+          <span *ngIf="data === this.language"><button (click)="cancel()"    >{{'MTF.BUTTON.CANCEL' | translate }}</button></span>
+        </td>
+      </tr>
+      <tr *ngIf="!addNewLanguage">
+        <td colspan="5">
+          <button (click)="addNew()">{{'MTF.BUTTON.ADD' | translate }}</button>
+        </td>
+      </tr>
+      <tr *ngIf="addNewLanguage">
+        <td headers="english_namehead">
+          <input
+            [(ngModel)]="language.english_name"
+            type="text"
+            size="20"
+            maxlength="50"
+          >
+        </td>
+        <td headers="native_namehead">
+          <input
+            [(ngModel)]="language.native_name"
+            type="text"
+            size="20"
+            maxlength="50"
+          >
+        </td>
+        <td headers="iso_639_1">
+          <input
+            [(ngModel)]="language.iso_639_1"
+            (ngModelChange)="language.iso_639_1 = $event.toUpperCase()"
+            type="text"
+            size="2"
+            maxlength="2"
+          >
+        </td>
+        <td headers="iso_639_2">
+          <input
+            [(ngModel)]="language.iso_639_2"
+            (ngModelChange)="language.iso_639_2 = $event.toUpperCase()"
+            type="text"
+            size="3"
+            maxlength="3"
+          >
+        </td>
+        <td headers="iso_639_3">
+          <input
+            [(ngModel)]="language.iso_639_3"
+            (ngModelChange)="language.iso_639_3 = $event.toUpperCase()"
+            type="text"
+            size="3"
+            maxlength="3"
+            >
+        </td>
+        <td headers="actions">
+          <span><button (click)="save(language)">{{'MTF.BUTTON.SAVE'   | translate }}</button></span>
+          <span><button (click)="cancel()"      >{{'MTF.BUTTON.CANCEL' | translate }}</button></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

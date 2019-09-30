@@ -1,0 +1,90 @@
+<div>
+  <h2>{{'MTF.MAINTAIN' | translate }} {{'MTF.MENU.APPLICATIONS' | translate }}</h2>
+  <table appDataTable #mf="mfDataTable" class="apptable" [mfData]="pollingDbService.applications" >
+    <thead>
+      <tr>
+        <th id="codehead"  title="{{'MTF.TH.CODE'        | translate }}"><app-default-sorter id="codehead"  by="code"       >{{'MTF.TH.CODE'        | translate }}</app-default-sorter></th>
+        <th id="namehead"  title="{{'MTF.TH.NAME'        | translate }}"><app-default-sorter id="namehead"  by="name"       >{{'MTF.TH.NAME'        | translate }}</app-default-sorter></th>
+        <th id="descrhead" title="{{'MTF.TH.DESCRIPTION' | translate }}"><app-default-sorter id="descrhead" by="description">{{'MTF.TH.DESCRIPTION' | translate }}</app-default-sorter></th>
+        <th id="actions"   title="{{'MTF.TH.EDIT'        | translate }}"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of mf.data">
+        <td headers="codehead">
+          <span *ngIf="data !== this.application">{{ data.code }}</span>
+          <input
+            *ngIf="data === this.application"
+            [(ngModel)]="data.code"
+            (ngModelChange)="data.code = $event.toUpperCase()"
+            (keyup.enter)="save(data)"
+            size="3"
+            maxlength="3"
+          >
+        </td>
+        <td headers="namehead">
+          <span *ngIf="data !== this.application">{{ data.name }}</span>
+          <input
+            *ngIf="data === this.application"
+            [(ngModel)]="data.name"
+            (keyup.enter)="save(data)"
+            size="20"
+            maxlength="255"
+          >
+        </td>
+        <td headers="descrhead">
+          <span *ngIf="data !== this.application">{{ data.description  }}</span>
+          <input
+            *ngIf="data === this.application"
+            [(ngModel)]="data.description"
+            (keyup.enter)="save(data)"
+            size="40"
+            maxlength="255"
+          >
+        </td>
+        <td headers="actions">
+          <span *ngIf="data !== this.application"><button (click)="edit(data)"  >{{'MTF.BUTTON.EDIT'   | translate }}</button></span>
+          <span *ngIf="data !== this.application"><button (click)="delete(data)">{{'MTF.BUTTON.DELETE' | translate }}</button></span>
+          <span *ngIf="data === this.application"><button (click)="save(data)"  >{{'MTF.BUTTON.SAVE'   | translate }}</button></span>
+          <span *ngIf="data === this.application"><button (click)="cancel()"    >{{'MTF.BUTTON.CANCEL' | translate }}</button></span>
+        </td>
+      </tr>
+      <tr *ngIf="!addNewApplication">
+        <td colspan="4">
+          <button (click)="addNew()">{{'MTF.BUTTON.ADD' | translate }}</button>
+        </td>
+      </tr>
+      <tr *ngIf="addNewApplication">
+        <td headers="codehead">
+          <input
+            [(ngModel)]="application.code"
+            (ngModelChange)="data.code = $event.toUpperCase()"
+            (keyup.enter)="save(application)"
+            size="3"
+            maxlength="3"
+          >
+        </td>
+        <td headers="namehead">
+          <input
+            [(ngModel)]="application.name"
+            (keyup.enter)="save(application)"
+            size="20"
+            maxlength="255"
+          >
+        </td>
+        <td headers="descrhead">
+          <input
+            [(ngModel)]="application.description"
+            (keyup.enter)="save(application)"
+            size="40"
+            maxlength="255"
+          >
+        </td>
+        <td headers="actions">
+          <span><button (click)="save(application)">{{'MTF.BUTTON.SAVE' | translate }}</button></span>
+          <span><button (click)="cancel()"   >{{'MTF.BUTTON.CANCEL' | translate }}</button></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

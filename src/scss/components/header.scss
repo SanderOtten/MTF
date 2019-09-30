@@ -1,0 +1,17 @@
+div.header
+{
+  height: $navigation-size-height;
+  padding: $navigation_item_padding;
+
+  h1
+  {
+    display: inline;
+  }
+
+  img
+  {
+    display: block;
+    float: right;
+    height: inherit;
+  }
+}
