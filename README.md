@@ -2,6 +2,12 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.
 
+## About
+
+This application can be used to maintain the translation files for several applications. The data is stored in a MySQL database.
+
+You can get the translations in your applications directly from the database. You can also choose to create a .json file with your translations in the Downloads page and you can even create or update your translations by submitting a .json file on the Uploads page.
+
 ## Create Database
 
 To create the database for this application, run sql script src/sql/mtf.sql in phpMyAdmin or another database editor.
