@@ -42,7 +42,7 @@
             maxlength="255"
           >
         </td>
-        <td headers="actions">
+        <td headers="actions" *ngIf="data.code !== 'MTF'">
           <span *ngIf="data !== this.application"><button (click)="edit(data)"  >{{'MTF.BUTTON.EDIT'   | translate }}</button></span>
           <span *ngIf="data !== this.application"><button (click)="delete(data)">{{'MTF.BUTTON.DELETE' | translate }}</button></span>
           <span *ngIf="data === this.application"><button (click)="save(data)"  >{{'MTF.BUTTON.SAVE'   | translate }}</button></span>
