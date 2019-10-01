@@ -120,7 +120,7 @@ export class UploadComponent implements OnInit {
 
     let fileReader = new FileReader();
     fileReader.onloadend = (e) => {
-      this.input = fileReader.result;
+      this.input = fileReader.result.toString();
       this.save();
     }
     fileReader.readAsText(this.file);

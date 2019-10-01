@@ -32,6 +32,6 @@
     <textarea class="uploadBox" [(ngModel)]="input" placeholder="{{ 'MTF.CONTENT_HERE' | translate }}"></textarea>
   </p>
   <p>
-    <button (click)="save()" *ngIf="input !==''" [disabled]="language === '' || application === '0' || input === ''">{{'MTF.BUTTON.SAVE' | translate }}</button>
+    <button (click)="save()" *ngIf="input !== ''" [disabled]="language === '' || application === '0' || input === ''">{{'MTF.BUTTON.SAVE' | translate }}</button>
   </p>
 </div>
