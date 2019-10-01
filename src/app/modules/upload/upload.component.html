@@ -24,7 +24,11 @@
     <p>{{ 'MTF.SAVED' | translate }}</p>
     <button (click)="saved=false">OK</button>
   </div>
-  <p *ngIf="!saved">
+  <p *ngIf="!saved && language !== '' && application !== ''">
+    <button (click)="uploadFile()">{{'MTF.BUTTON.UPLOAD_FILE' | translate}}</button>
+    <br/>
+    {{'MTF.OR' | translate}}
+    <br/>
     <textarea class="uploadBox" [(ngModel)]="input" placeholder="{{ 'MTF.CONTENT_HERE' | translate }}"></textarea>
   </p>
   <p>

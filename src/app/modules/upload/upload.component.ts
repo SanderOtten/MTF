@@ -12,10 +12,13 @@ import * as flat from 'flat';
 export class UploadComponent implements OnInit {
 
   input = '';
-  language;
-  application;
+  file;
+  language = '';
+  application = '';
   translations;
   translation;
+  uploadButton = document.createElement('input');
+  upload: boolean = false;
   saved: boolean = false;
 
   constructor( public  pollingDbService: PollingDbService,
@@ -50,7 +53,8 @@ export class UploadComponent implements OnInit {
   }
 
   save() {
-    const json = flat.flatten(JSON.parse(this.input));
+    let json = flat.flatten(JSON.parse(this.input));
+
     this.translations = [];
 
     // stop polling.
@@ -103,5 +107,35 @@ export class UploadComponent implements OnInit {
     this.pollingDbService.initialize();
     this.input = '';
     this.saved = true;
+
+    if ( this.upload ) {
+      document.body.removeChild(this.uploadButton);
+      this.upload = false;
+    }
+  }
+
+  processFile(event) {
+    // console.log(event.target.files[0]);
+    this.file = event.target.files[0];
+
+    let fileReader = new FileReader();
+    fileReader.onloadend = (e) => {
+      this.input = fileReader.result;
+      this.save();
+    }
+    fileReader.readAsText(this.file);
+  }
+
+  uploadFile() {
+    this.upload = true;
+    this.uploadButton = document.createElement('input');
+    this.uploadButton.type="file";
+    this.uploadButton.style.position = 'fixed';
+    this.uploadButton.style.left = '0';
+    this.uploadButton.style.top = '0';
+    this.uploadButton.style.opacity = '0';
+    this.uploadButton.addEventListener('change', (event) => this.processFile(event));
+    document.body.appendChild(this.uploadButton);
+    this.uploadButton.click();
   }
 }

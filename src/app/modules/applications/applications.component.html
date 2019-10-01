@@ -58,7 +58,7 @@
         <td headers="codehead">
           <input
             [(ngModel)]="application.code"
-            (ngModelChange)="data.code = $event.toUpperCase()"
+            (ngModelChange)="application.code = $event.toUpperCase()"
             (keyup.enter)="save(application)"
             size="3"
             maxlength="3"
