@@ -11,7 +11,6 @@ import { PollingDbService } from '../../core/services/db/polling.db.service';
 export class LabelsComponent implements OnInit, OnChanges {
 
   label;
-  // labels;
   addNewLabel: boolean;
   filterValue;
   filterOn;
@@ -28,9 +27,7 @@ export class LabelsComponent implements OnInit, OnChanges {
   }
 
   initialize() {
-    // console.log ('initialize labels');
     this.pollingDbService.initialize();
-    // this.labels = this.pollingDbService.labels;
     this.addNewLabel = false;
     this.label = [];
   }
@@ -68,7 +65,6 @@ export class LabelsComponent implements OnInit, OnChanges {
   }
 
   save($label) {
-    // this.pollingDbService.stopPolling();
     if ( $label.id === 0 ) {
       this.labelDbService.saveLabel($label);
     } else if ( this.label.id === $label.id  ) {

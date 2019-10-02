@@ -15,6 +15,7 @@ export class TranslationsComponent implements OnInit, OnChanges {
   filterOn;
   filterValue;
   showFilter = false;
+  firstInit = true;
 
   constructor( private translationDbService: TranslationDbService,
                public pollingDbService: PollingDbService
@@ -31,11 +32,15 @@ export class TranslationsComponent implements OnInit, OnChanges {
     // this.showFilter = false;
     this.pollingDbService.initialize();
     this.translation = [];
-    this.filterOn = [];
-    this.filterOn.app_code = [];
-    this.filterOn.iso_639_1 = [];
-    this.filterOn.label = '';
-    this.filterOn.text = '';
+
+    if (this.firstInit) {
+      this.filterOn = [];
+      this.filterOn.app_code = [];
+      this.filterOn.iso_639_1 = [];
+      this.filterOn.label = '';
+      this.filterOn.text = '';
+      this.firstInit = false;
+    }
   }
 
   stopPolling() {
