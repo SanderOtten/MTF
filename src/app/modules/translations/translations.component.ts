@@ -87,6 +87,7 @@ export class TranslationsComponent implements OnInit, OnChanges {
   }
 
   clearFilter(){
+    this.firstInit = true;
     this.initialize();
   }
 
